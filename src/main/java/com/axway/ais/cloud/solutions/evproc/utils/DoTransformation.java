@@ -62,6 +62,7 @@ public class DoTransformation {
     } else {
       throw new Exception("Input file or Text file must be specified");
     }
+    out.close();
 
     LOGGER.info("[*] Done XSL processing---------");
 

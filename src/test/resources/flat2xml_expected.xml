@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rows xmlns:axway="http=//axway.com">
+   <row RECORD_STATUS="D"
+         INTERNAL_SCHEDULE_LINE_ID="DE_47742-T"
+         INTERNAL_SCHEDULE_DATE="2023-01-31T00:00:00Z"
+         CURRENCY_CODE="EUR"
+         INTERNAL_SCHEDULE_TYPE="DEPRECIATION"
+         AMOUNT_TYPE="FINANCED_AMOUNT"
+         ACCOUNTING_SYSTEM="LOCAL"
+         CONTRACT_ID="DE_1_47742-TR"
+         ASSET_ID="21405"
+         VALUE="-1583.33"/>
+</rows>
