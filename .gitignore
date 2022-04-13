@@ -25,3 +25,7 @@ hs_err_pid*
 # Maven target
 /target/
 AISuite-exit-XSLtransform.code-workspace
+src/com/axway/ais/cloud/solutions/evproc/test/flat2xml.xml
+src/com/axway/ais/cloud/solutions/evproc/test/xml2flat.txt
+src/com/axway/ais/cloud/solutions/evproc/test/xslt.bat
+src/com/axway/ais/cloud/solutions/evproc/test/xslt2flat.bat

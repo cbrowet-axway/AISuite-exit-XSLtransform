@@ -3,8 +3,6 @@ package com.axway.ais.cloud.solutions.evproc.transformXMLOperation;
 import static com.axway.ais.evproc.api.EventHeader.DATA_FILE;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,16 +10,8 @@ import java.util.List;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import net.sf.saxon.s9api.Processor;
-import net.sf.saxon.s9api.QName;
-import net.sf.saxon.s9api.Serializer;
-import net.sf.saxon.s9api.XdmAtomicValue;
-import net.sf.saxon.s9api.XdmValue;
-import net.sf.saxon.s9api.Xslt30Transformer;
-import net.sf.saxon.s9api.XsltCompiler;
-import net.sf.saxon.s9api.XsltExecutable;
-
 import com.axway.ais.evproc.api.EventHeader;
+import com.axway.ais.cloud.solutions.evproc.utils.DoTransformation;
 import com.axway.ais.evproc.api.*;
 import com.axway.ais.evproc.operation.AbstractAsyncOperation;
 import com.axway.ais.rs.api.AsyncTaskResult;
@@ -29,9 +19,6 @@ import com.axway.ais.rs.api.AsyncRequest;
 import com.axway.ais.rs.api.ExecutionError;
 
 import java.util.Map;
-import java.util.Optional;
-
-import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
@@ -125,45 +112,9 @@ public class XSLtransformOperation extends AbstractAsyncOperation {
 		String inputFile = request.getInputfilename();
 		String outputFile = request.getOutputfilename();
 		String xslFile = request.getXslFile();
-		String textFile = "";
 
 		try {
-
-			File output = new File(outputFile);
-			File xsl = new File(xslFile);
-
-			if (!getFileExtension(inputFile).get().equalsIgnoreCase("xml")) {
-				textFile = inputFile;
-				inputFile = "";
-			}
-
-			LOGGER.info("[*] Start XSL processing---------");
-
-			Processor processor = new Processor(false);
-			XsltCompiler compiler = processor.newXsltCompiler();
-
-			if (!textFile.isEmpty()) {
-				QName qname = new QName("text-input");
-				XdmValue value = new XdmAtomicValue(textFile);
-				compiler.setParameter(qname, value);
-			}
-
-			XsltExecutable stylesheet = compiler.compile(new StreamSource(xsl));
-			Serializer out = processor.newSerializer(output);
-			out.setOutputProperty(Serializer.Property.METHOD, "xml");
-			out.setOutputProperty(Serializer.Property.INDENT, "yes");
-			Xslt30Transformer transformer = stylesheet.load30();
-
-			if (!textFile.isEmpty()) {
-				transformer.callTemplate(new QName("main"), out);
-			} else if (!inputFile.isEmpty()) {
-				transformer.transform(new StreamSource(new File(inputFile)), out);
-			} else {
-				throw new Exception("Input file or Text file must be specified");
-			}
-
-			LOGGER.info("[*] Done XSL processing---------");
-
+			DoTransformation.doTransform(inputFile, outputFile, xslFile);
 			result.setOutputFilename(outputFile);
 
 		} catch (Exception e) {
@@ -229,12 +180,6 @@ public class XSLtransformOperation extends AbstractAsyncOperation {
 		return evtBuilder.build();
 	}
 
-	private static Optional<String> getFileExtension(String filename) {
-		return Optional.ofNullable(filename)
-				.filter(f -> f.contains("."))
-				.map(f -> f.substring(filename.lastIndexOf(".") + 1));
-	}
-
 	@Override
 	protected String getFunctionName() {
 		// TODO Auto-generated method stub
@@ -252,63 +197,4 @@ public class XSLtransformOperation extends AbstractAsyncOperation {
 		// TODO Auto-generated method stub
 		return RESULT_TYPE;
 	}
-
-	public static void main(String[] args) throws IOException {
-
-		String inputFile = "INTSCHED.txt";
-		String outputFile = "INTSCHED.xml";
-		String xslFile = "INTSCHED.xsl";
-		String textFile = "";
-
-		// String inputFile = "TRANSFORM_IN.xml";
-		// String outputFile = "TRANSFORM.xml";
-		// String xslFile = "TRANSFORM.xsl";
-		// String textFile = "";
-
-		try {
-
-			File output = new File(outputFile);
-			File xsl = new File(xslFile);
-
-			if (!getFileExtension(inputFile).get().equalsIgnoreCase("xml")) {
-				textFile = inputFile;
-				inputFile = "";
-			}
-
-			LOGGER.info("[*] Start XSL processing---------");
-
-			Processor processor = new Processor(false);
-			XsltCompiler compiler = processor.newXsltCompiler();
-
-			if (!textFile.isEmpty()) {
-				QName qname = new QName("text-input");
-				XdmValue value = new XdmAtomicValue(textFile);
-				compiler.setParameter(qname, value);
-			}
-
-			XsltExecutable stylesheet = compiler.compile(new StreamSource(xsl));
-			Serializer out = processor.newSerializer(output);
-			out.setOutputProperty(Serializer.Property.METHOD, "xml");
-			out.setOutputProperty(Serializer.Property.INDENT, "yes");
-			Xslt30Transformer transformer = stylesheet.load30();
-
-			if (!textFile.isEmpty()) {
-				transformer.callTemplate(new QName("main"), out);
-			} else if (!inputFile.isEmpty()) {
-				transformer.transform(new StreamSource(new File(inputFile)), out);
-			} else {
-				throw new Exception("Input file or Text file must be specified");
-			}
-
-			LOGGER.info("[*] Done XSL processing---------");
-
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage());
-
-		} catch (NoClassDefFoundError e) {
-			LOGGER.error(e.getMessage());
-		}
-
-	}
-
 }

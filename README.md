@@ -4,7 +4,7 @@
 
 - InputFilename: source file for the transformation
   - If the file has anything else than a ".xml" extension, a flat file to XML transformation is used.
-- OutputFilename: destination XML
+- OutputFilename: output file, text or xml
 - XslFile: XSLT to be applied
 
 ## Specifics for a flat file transformation
