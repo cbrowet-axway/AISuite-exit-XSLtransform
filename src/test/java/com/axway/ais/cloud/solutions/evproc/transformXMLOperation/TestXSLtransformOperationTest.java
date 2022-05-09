@@ -113,4 +113,52 @@ public class TestXSLtransformOperationTest {
 
 	}
 
+	@Test
+	@DisplayName("XML to Flat file 2")
+	public void xml2flat2(@TempDir Path tempDir) {
+
+		/* Text to XML */
+
+		Path resourceDirectory = Paths.get("src","test","resources");
+		String absolutePath = resourceDirectory.toFile().getAbsolutePath();
+		System.out.println(absolutePath);
+
+		File outputPath = null;
+		try {
+			outputPath = File.createTempFile("xml2flat2", ".txt");
+			outputPath.deleteOnExit();
+		} catch (IOException e) {
+			fail(e.getMessage());
+		}
+		String outputFile = outputPath.getAbsolutePath();
+
+		String inputFile = absolutePath + "/xml2flat2.xml";
+		String xslFile = absolutePath + "/xml2flat2.xsl";
+		String expectedFile = absolutePath + "/xml2flat2_expected.txt";
+
+
+		try {
+			DoTransformation.doTransform(inputFile.toString(), outputFile, xslFile);
+
+		} catch (Exception e) {
+			fail(e.getMessage());
+
+		} catch (NoClassDefFoundError e) {
+			fail(e.getMessage());
+		}
+		
+		final File expected = new File(expectedFile);		
+    final File output = new File(outputFile);
+
+		try {
+			assertEquals(
+					FileUtils.readFileToString(expected, "utf-8"),
+					FileUtils.readFileToString(output, "utf-8"),
+					"The files differ!");
+		} catch (IOException e) {
+			fail(e.getMessage());
+		}
+
+	}
+
 }
