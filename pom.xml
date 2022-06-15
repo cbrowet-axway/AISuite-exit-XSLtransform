@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>evproc-transformXMLOperation</groupId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
     <artifactId>evproc-transformXMLOperation</artifactId>
 
     <name>XSLtransform</name>
@@ -152,7 +152,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.axway.aisuite.script.Main</mainClass>
+                            <mainClass>com.axway.ais.cloud.solutions.evproc.MainApp.main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

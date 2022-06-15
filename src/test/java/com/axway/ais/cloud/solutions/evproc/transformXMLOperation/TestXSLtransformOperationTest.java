@@ -30,9 +30,10 @@ public class TestXSLtransformOperationTest {
 
 		File outputPath = null;
 		try {
-			outputPath = File.createTempFile("flat2xml", ".xml");
+			outputPath = File.createTempFile("test-flat2xml", ".xml");
 			outputPath.deleteOnExit();
 		} catch (IOException e) {
+			e.printStackTrace();
 			fail(e.getMessage());
 		}
 		String outputFile = outputPath.getAbsolutePath();
@@ -43,9 +44,10 @@ public class TestXSLtransformOperationTest {
 
 
 		try {
-			DoTransformation.doTransform(inputFile.toString(), outputFile, xslFile);
+			new DoTransformation().doTransform(inputFile.toString(), outputFile, xslFile);
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			fail(e.getMessage());
 
 		} catch (NoClassDefFoundError e) {
@@ -61,6 +63,7 @@ public class TestXSLtransformOperationTest {
 					FileUtils.readFileToString(output, "utf-8"),
 					"The files differ!");
 		} catch (IOException e) {
+			e.printStackTrace();
 			fail(e.getMessage());
 		}
 	}
@@ -77,9 +80,10 @@ public class TestXSLtransformOperationTest {
 
 		File outputPath = null;
 		try {
-			outputPath = File.createTempFile("xml2flat", ".txt");
+			outputPath = File.createTempFile("test-xml2flat", ".txt");
 			outputPath.deleteOnExit();
 		} catch (IOException e) {
+			e.printStackTrace();
 			fail(e.getMessage());
 		}
 		String outputFile = outputPath.getAbsolutePath();
@@ -90,9 +94,10 @@ public class TestXSLtransformOperationTest {
 
 
 		try {
-			DoTransformation.doTransform(inputFile.toString(), outputFile, xslFile);
+			new DoTransformation().doTransform(inputFile.toString(), outputFile, xslFile);
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			fail(e.getMessage());
 
 		} catch (NoClassDefFoundError e) {
@@ -108,6 +113,7 @@ public class TestXSLtransformOperationTest {
 					FileUtils.readFileToString(output, "utf-8"),
 					"The files differ!");
 		} catch (IOException e) {
+			e.printStackTrace();
 			fail(e.getMessage());
 		}
 
@@ -125,9 +131,10 @@ public class TestXSLtransformOperationTest {
 
 		File outputPath = null;
 		try {
-			outputPath = File.createTempFile("xml2flat2", ".txt");
+			outputPath = File.createTempFile("test-xml2flat2", ".txt");
 			outputPath.deleteOnExit();
 		} catch (IOException e) {
+			e.printStackTrace();
 			fail(e.getMessage());
 		}
 		String outputFile = outputPath.getAbsolutePath();
@@ -138,9 +145,10 @@ public class TestXSLtransformOperationTest {
 
 
 		try {
-			DoTransformation.doTransform(inputFile.toString(), outputFile, xslFile);
+			new DoTransformation().doTransform(inputFile.toString(), outputFile, xslFile);
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			fail(e.getMessage());
 
 		} catch (NoClassDefFoundError e) {
@@ -156,6 +164,7 @@ public class TestXSLtransformOperationTest {
 					FileUtils.readFileToString(output, "utf-8"),
 					"The files differ!");
 		} catch (IOException e) {
+			e.printStackTrace();
 			fail(e.getMessage());
 		}
 

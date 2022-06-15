@@ -114,7 +114,7 @@ public class XSLtransformOperation extends AbstractAsyncOperation {
 		String xslFile = request.getXslFile();
 
 		try {
-			DoTransformation.doTransform(inputFile, outputFile, xslFile);
+			new DoTransformation().doTransform(inputFile, outputFile, xslFile);
 			result.setOutputFilename(outputFile);
 
 		} catch (Exception e) {
